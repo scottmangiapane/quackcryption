@@ -62,16 +62,14 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getBaseContext(), "Copied!", Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 } else {
                     duckIcon.setImageResource(R.drawable.duck_unlocked);
-                    textBox.setText(quackReader(decrypt("QuackQuackQuack!", "RandomInitVector",
-                            String.valueOf(textBox.getText()))));
+                    textBox.setText(decrypt("QuackQuackQuack!", "RandomInitVector",
+                            quackReader(String.valueOf(textBox.getText()))));
                     textBox.setFocusableInTouchMode(true);
                     textBox.setOnClickListener(null);
                 }
                 isUnlocked = !isUnlocked;
-                // play sound
                 MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.duck);
                 mp.start();
             }
@@ -637,7 +635,7 @@ public class MainActivity extends AppCompatActivity {
 
             byte[] encrypted = cipher.doFinal(value.getBytes());
 
-            return Base64.encodeBase64String(encrypted);
+            return new String(Base64.encodeBase64(encrypted));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -653,13 +651,12 @@ public class MainActivity extends AppCompatActivity {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
 
-            byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted));
+            byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted.getBytes()));
 
             return new String(original);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
         return null;
     }
 }
