@@ -1,7 +1,13 @@
 package co.twoduck.quackcryption;
 
+import android.net.Uri;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+
+import java.io.File;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -11,10 +17,47 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FileUriCallback mFileUriCallback;
+    NfcAdapter mNfcAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        mFileUriCallback = new FileUriCallback();
+        mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
+    }
+
+    private Uri[] mFileUris = new Uri[10];
+    private class FileUriCallback implements NfcAdapter.CreateBeamUrisCallback {
+        public FileUriCallback() {
+        }
+        /**
+         * Create content URIs as needed to share with another device
+         */
+        @Override
+        public Uri[] createBeamUris(NfcEvent event) {
+            return mFileUris;
+        }
+    }
+
+    private void updateText() {
+        /*
+         * Create a list of URIs, get a File,
+         * and set its permissions
+         */
+        Uri[] mFileUris = new Uri[10];
+        String transferFile = "text.txt";
+        File extDir = getExternalFilesDir(null);
+        File requestFile = new File(extDir, transferFile);
+        requestFile.setReadable(true, false);
+        // Get a URI for the File and add it to the list of URIs
+        Uri fileUri = Uri.fromFile(requestFile);
+        if (fileUri != null) {
+            mFileUris[0] = fileUri;
+        } else {
+            Log.e("My Activity", "No File URI available for file.");
+        }
     }
 
     /**
