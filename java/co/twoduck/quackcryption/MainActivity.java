@@ -5,37 +5,57 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-
-import java.io.File;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import org.apache.commons.codec.binary.Base64;
+
+import java.io.File;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class MainActivity extends AppCompatActivity {
-
     private FileUriCallback mFileUriCallback;
-    NfcAdapter mNfcAdapter;
+    private NfcAdapter mNfcAdapter;
+    private boolean isUnlocked;
+    private EditText textBox;
+    private ImageView duckIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         mFileUriCallback = new FileUriCallback();
-        mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
+        mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback, this);
+        isUnlocked = true;
+        textBox = (EditText) findViewById(R.id.text_box);
+        duckIcon = (ImageView) findViewById(R.id.duck);
+        duckIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isUnlocked)
+                    duckIcon.setImageResource(R.drawable.duck_locked);
+                else
+                    duckIcon.setImageResource(R.drawable.duck_unlocked);
+                isUnlocked = !isUnlocked;
+            }
+        });
     }
 
     // A File object containing the path to the transferred files
     private File mParentPath;
     // Incoming Intent
     private Intent mIntent;
+
     /*
      * Called from onNewIntent() for a SINGLE_TOP Activity
      * or onCreate() for a new Activity. For onNewIntent(),
@@ -76,9 +96,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Uri[] mFileUris = new Uri[10];
+
     private class FileUriCallback implements NfcAdapter.CreateBeamUrisCallback {
         public FileUriCallback() {
         }
+
         /**
          * Create content URIs as needed to share with another device
          */
@@ -103,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             // For a MediaStore content URI
         } else {
             // Get the column that contains the file name
-            String[] projection = { MediaStore.MediaColumns.DATA };
+            String[] projection = {MediaStore.MediaColumns.DATA};
             Cursor pathCursor =
                     getContentResolver().query(beamUri, projection,
                             null, null, null);
