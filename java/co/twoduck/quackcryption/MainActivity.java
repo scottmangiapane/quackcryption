@@ -1,5 +1,8 @@
 package co.twoduck.quackcryption;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -13,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -42,11 +46,31 @@ public class MainActivity extends AppCompatActivity {
         duckIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isUnlocked)
+                if (isUnlocked) {
                     duckIcon.setImageResource(R.drawable.duck_locked);
-                else
+                    textBox.setText(quackCryptor(encrypt("QuackQuackQuack!", "RandomInitVector",
+                            String.valueOf(textBox.getText()))));
+                    textBox.setFocusable(false);
+                    textBox.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ClipboardManager clipboard = (ClipboardManager)
+                                    getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData clip = ClipData.newPlainText("simple text", "Hello, World!");
+                            clipboard.setPrimaryClip(clip);
+                            Toast.makeText(getBaseContext(), "Copied!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } else {
                     duckIcon.setImageResource(R.drawable.duck_unlocked);
+                    textBox.setText(quackReader(decrypt("QuackQuackQuack!", "RandomInitVector",
+                            String.valueOf(textBox.getText()))));
+                    textBox.setFocusableInTouchMode(true);
+                    textBox.setOnClickListener(null);
+                }
                 isUnlocked = !isUnlocked;
+                // play sound
             }
         });
     }
@@ -609,9 +633,7 @@ public class MainActivity extends AppCompatActivity {
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 
             byte[] encrypted = cipher.doFinal(value.getBytes());
-            //System.out.println("encrypted string: "
-            //        + Base64.encodeBase64String(encrypted));
-
+            
             return Base64.encodeBase64String(encrypted);
         } catch (Exception ex) {
             ex.printStackTrace();
