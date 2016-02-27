@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < inputArray.length; i++) {
             switch (inputArray[i]) {
                 case 43:
-                    quacked = quacked + "QUACKQUAcK";
+                    quacked = quacked + "qUACKQUAcK";
                     break;
                 case 47:
                     quacked = quacked + "quackquack";
