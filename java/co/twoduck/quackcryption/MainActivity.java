@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 isUnlocked = !isUnlocked;
                 // play sound
+                MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.duck);
+                mp.start();
             }
         });
     }
