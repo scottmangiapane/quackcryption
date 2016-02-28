@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView duckIcon;
     private ImageView settings;
     private Preferences preferences;
+    private SingleStep ss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         duckIcon = (ImageView) findViewById(R.id.duck);
         settings = (ImageView) findViewById(R.id.settings);
         preferences = new Preferences(this);
+        ss = new SingleStep();
         duckIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,18 +45,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refresh() {
-        if (String.valueOf(textBox.getText()).startsWith("QuAcKqUaCk ")) {
+        if (String.valueOf(textBox.getText()).toLowerCase().startsWith("quackquack ")) {
             duckIcon.setImageResource(R.drawable.duck_unlocked);
-            textBox.setText(Encryptor.decrypt(preferences.getKey(),
-                    preferences.getInitVector(), Encryptor.quackReader(
-                            String.valueOf(textBox.getText()).substring(11))));
+            textBox.setText(ss.throughNormal(preferences.getKey(),
+                    preferences.getInitVector(),
+                    String.valueOf(textBox.getText())));
             textBox.setFocusableInTouchMode(true);
             textBox.setOnClickListener(null);
         } else {
             duckIcon.setImageResource(R.drawable.duck_locked);
-            textBox.setText("QuAcKqUaCk " + Encryptor.quackCryptor(Encryptor.encrypt(
+            textBox.setText(ss.throughQuack(
                     preferences.getKey(), preferences.getInitVector(),
-                    String.valueOf(textBox.getText()))));
+                    String.valueOf(textBox.getText())));
             textBox.setFocusable(false);
             textBox.setOnClickListener(new View.OnClickListener() {
                 @Override
