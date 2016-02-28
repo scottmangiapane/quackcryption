@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText textBox;
     private ImageView duckIcon;
     private ImageView settings;
+    private MediaPlayer mp;
     private Preferences preferences;
     private SingleStep ss;
     private Toast t;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         textBox = (EditText) findViewById(R.id.text_box);
         duckIcon = (ImageView) findViewById(R.id.duck);
         settings = (ImageView) findViewById(R.id.settings);
+        mp = MediaPlayer.create(MainActivity.this, R.raw.quack);
         preferences = new Preferences(this);
         ss = new SingleStep();
         duckIcon.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.quack);
-        if (mp != null)
-            mp.start();
+        mp.start();
     }
 }
