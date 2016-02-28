@@ -13,16 +13,19 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    private AppCompatActivity activity;
     private EditText textBox;
     private ImageView duckIcon;
     private ImageView settings;
     private Preferences preferences;
     private SingleStep ss;
+    private Toast t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activity = this;
         textBox = (EditText) findViewById(R.id.text_box);
         duckIcon = (ImageView) findViewById(R.id.duck);
         settings = (ImageView) findViewById(R.id.settings);
@@ -57,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
             textBox.setText(ss.throughQuack(
                     preferences.getKey(), preferences.getInitVector(),
                     String.valueOf(textBox.getText())));
+            textBox.setEnabled(false);
+            textBox.setEnabled(true);
             textBox.setFocusable(false);
             textBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
                     ClipData clip = ClipData.newPlainText("ENCRYPTED STRING",
                             String.valueOf(textBox.getText()));
                     clipboard.setPrimaryClip(clip);
-                    Toast.makeText(getBaseContext(), "Copied!", Toast.LENGTH_SHORT).show();
+                    if (t != null)
+                        t.cancel();
+                    t = Toast.makeText(activity, "Copied!", Toast.LENGTH_SHORT);
+                    t.show();
                 }
             });
         }

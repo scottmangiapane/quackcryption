@@ -1,9 +1,10 @@
 package co.twoduck.quackcryption;
 
+import org.apache.commons.codec.binary.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.codec.binary.*;
 
 public class AES {
     public static String encrypt(String key, String initVector, String value) {
@@ -33,5 +34,4 @@ public class AES {
         }
         return null;
     }
-
 }

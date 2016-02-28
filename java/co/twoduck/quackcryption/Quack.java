@@ -1,11 +1,11 @@
 package co.twoduck.quackcryption;
 
 public class Quack {
-    public static String quackCrypt(String str1) { // Converts from a string to quack.
+    public static String quackCrypt(String str1) {
         String quacked = "";
         char[] inputArray = str1.toCharArray();
         for (int i = 0; i < inputArray.length; i++) {
-            switch (inputArray[i]) { // Each character has a permutation of 'quackquack' assigned to it.
+            switch (inputArray[i]) {
                 case 0:
                     quacked += "quackquack";
                     break;
@@ -441,14 +441,14 @@ public class Quack {
             }
             quacked += " ";
         }
-        return quacked; // Returns quacked string.
+        return quacked;
     }
 
-    public static String quackReader(String str2) { // Converts from quack to a string.
+    public static String quackReader(String str2) {
         String deQuacked = "";
         String[] translateArray = str2.split(" ");
         for (int i = 0; i < translateArray.length; i++) {
-            switch (translateArray[i]) { // Each faux integer gets casted to a char.
+            switch (translateArray[i]) {
                 case "quackquack":
                     deQuacked += (char) 0;
                     break;
@@ -1264,6 +1264,6 @@ public class Quack {
                     break;
             }
         }
-        return deQuacked; // Returns the deQuacked string.
+        return deQuacked;
     }
 }

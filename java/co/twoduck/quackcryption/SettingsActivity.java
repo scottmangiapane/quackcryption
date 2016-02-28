@@ -26,6 +26,8 @@ public class SettingsActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (!String.valueOf(initVector.getText()).equals(""))
             if (initVector.getText().length() % 16 != 0) {
+                if (t != null)
+                    t.cancel();
                 t = Toast.makeText(this, "Init vector must be divisible by 16", Toast.LENGTH_SHORT);
                 t.show();
                 return;
@@ -33,6 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
                 preferences.setInitVector(String.valueOf(initVector.getText()));
         if (!String.valueOf(key.getText()).equals(""))
             if (key.getText().length() % 16 != 0) {
+                if (t != null)
+                    t.cancel();
                 t = Toast.makeText(this, "Key must be divisible by 16", Toast.LENGTH_SHORT);
                 t.show();
                 return;
