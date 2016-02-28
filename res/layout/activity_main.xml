@@ -12,13 +12,13 @@
     tools:context="co.twoduck.quackcryption.MainActivity">
 
     <ImageView
+        android:id="@+id/settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/activity_space"
-        android:src="@mipmap/ic_sync_white_24dp" />
+        android:src="@drawable/ic_settings_white_24dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,8 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_margin="@dimen/activity_space"
-            android:layout_marginLeft="@dimen/activity_margin"
-            android:layout_marginRight="@dimen/activity_margin"
+            android:layout_marginLeft="@dimen/activity_margin_large"
+            android:layout_marginRight="@dimen/activity_margin_large"
             android:src="@drawable/duck_unlocked" />
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -40,7 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/activity_space"
             card_view:cardCornerRadius="4dp">
 
             <EditText
@@ -52,7 +51,7 @@
                 android:gravity="top"
                 android:imeOptions="flagNoExtractUi"
                 android:maxLines="8"
-                android:minLines="2"
+                android:minLines="1"
                 android:padding="@dimen/activity_space"
                 android:scrollbars="vertical" />
         </android.support.v7.widget.CardView>
