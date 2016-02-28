@@ -35,7 +35,7 @@ public class Encryptor {
         return null;
     }
 
-    public String quackCryptor(String str1) {
+    public static String quackCryptor(String str1) {
         String quacked = "";
         char[] inputArray = str1.toCharArray();
         for (int i = 0; i < inputArray.length; i++) {
@@ -241,7 +241,7 @@ public class Encryptor {
         return quacked;
     }
 
-    public String quackReader(String str2) {
+    public static String quackReader(String str2) {
         String deQuacked = "";
         String[] translateArray = str2.split(" ");
         for (int j = 0; j < translateArray.length; j++) {

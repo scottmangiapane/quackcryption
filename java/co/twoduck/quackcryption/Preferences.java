@@ -3,6 +3,7 @@ package co.twoduck.quackcryption;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class Preferences {
     private SharedPreferences sharedPreferences;
@@ -14,7 +15,12 @@ public class Preferences {
     }
 
     public String getKey() {
-        return sharedPreferences.getString("key", "");
+        String s = sharedPreferences.getString("key", "");
+        if (s.equals("")) {
+            s = genRand();
+            setKey(s);
+        }
+        return s;
     }
 
     public void setKey(String data) {
@@ -23,11 +29,24 @@ public class Preferences {
     }
 
     public String getInitVector() {
-        return sharedPreferences.getString("init_vector", "");
+        String s = sharedPreferences.getString("init_vector", "");
+        if (s.equals("")) {
+            s = genRand();
+            setInitVector(s);
+        }
+        return s;
     }
 
     public void setInitVector(String data) {
         editor.putString("init_vector", data);
         editor.commit();
+    }
+
+    private String genRand() {
+        String s = "";
+        for (int i = 0; i < 16; i++)
+            s += (char) (Math.random() * 26 + 'A');
+        Log.w("############", s);
+        return s;
     }
 }

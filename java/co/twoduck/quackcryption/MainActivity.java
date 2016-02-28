@@ -13,31 +13,30 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private EditText textBox;
-    private Encryptor encryptor;
     private ImageView duckIcon;
+    private Preferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textBox = (EditText) findViewById(R.id.text_box);
-        encryptor = new Encryptor();
         duckIcon = (ImageView) findViewById(R.id.duck);
+        preferences = new Preferences(this);
         duckIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (String.valueOf(textBox.getText()).startsWith("QuAcKqUaCk ")) {
                     duckIcon.setImageResource(R.drawable.duck_unlocked);
-                    textBox.setText(encryptor.decrypt("QuackQuackQuack!", "RandomInitVector",
-                            encryptor.quackReader(String.valueOf(
-                                    textBox.getText())
-                                    .substring(11))));
+                    textBox.setText(Encryptor.decrypt(preferences.getKey(),
+                            preferences.getInitVector(), Encryptor.quackReader(
+                                    String.valueOf(textBox.getText()).substring(11))));
                     textBox.setFocusableInTouchMode(true);
                     textBox.setOnClickListener(null);
                 } else {
                     duckIcon.setImageResource(R.drawable.duck_locked);
-                    textBox.setText("QuAcKqUaCk " + encryptor.quackCryptor(encryptor.encrypt(
-                            "QuackQuackQuack!", "RandomInitVector",
+                    textBox.setText("QuAcKqUaCk " + Encryptor.quackCryptor(Encryptor.encrypt(
+                            preferences.getKey(), preferences.getInitVector(),
                             String.valueOf(textBox.getText()))));
                     textBox.setFocusable(false);
                     textBox.setOnClickListener(new View.OnClickListener() {
