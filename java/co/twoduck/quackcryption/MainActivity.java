@@ -50,16 +50,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refresh() {
-        if (String.valueOf(textBox.getText()).toLowerCase().startsWith("quackquack ")) {
+        if (String.valueOf(textBox.getText()).startsWith("qUACkquaCk ")) {
             duckIcon.setImageResource(R.drawable.duck_unlocked);
             textBox.setText(ss.throughNormal(preferences.getKey(),
                     preferences.getInitVector(),
-                    String.valueOf(textBox.getText())));
+                    String.valueOf(textBox.getText()).substring(11)));
             textBox.setFocusableInTouchMode(true);
             textBox.setOnClickListener(null);
         } else {
             duckIcon.setImageResource(R.drawable.duck_locked);
-            textBox.setText(ss.throughQuack(
+            textBox.setText("qUACkquaCk " + ss.throughQuack(
                     preferences.getKey(), preferences.getInitVector(),
                     String.valueOf(textBox.getText())));
             textBox.setEnabled(false);
@@ -80,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        mp.start();
+        try {
+            if (mp.isPlaying()) {
+                mp.stop();
+                mp.release();
+                mp = MediaPlayer.create(MainActivity.this, R.raw.quack);
+            } mp.start();
+        } catch(Exception e) { e.printStackTrace(); }
     }
 }

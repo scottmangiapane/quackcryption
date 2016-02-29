@@ -19,6 +19,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
+        android:background="@color/colorPrimary"
         android:src="@drawable/ic_settings_white_24dp" />
 
     <LinearLayout
