@@ -18,7 +18,7 @@
 
 ## Dependencies
 
-dependencies {<br>&emsp;compile 'com.android.support:appcompat-v7:24.1.1'<br>&emsp;compile 'com.android.support:cardview-v7:24.1.1'<br>}
+dependencies {<br>&emsp;compile 'com.android.support:appcompat-v7:24.1.1'<br>&emsp;compile 'com.android.support:cardview-v7:24.1.1'<br>&emsp;compile files('commons-codec-1.10.jar')<br>}
 
 ## Libraries
 
