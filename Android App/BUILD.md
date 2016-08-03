@@ -20,6 +20,7 @@
 
 <ul>
 <li>commons-codec-1.10.jar<br>https://commons.apache.org/proper/commons-codec/index.html</li>
+</ul>
 
 ## Dependencies
 
