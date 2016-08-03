@@ -42,11 +42,20 @@ public class Preferences {
         editor.commit();
     }
 
-    private String genRand() {
+    public String genRand() {
         String s = "";
         for (int i = 0; i < 16; i++)
             s += (char) (Math.random() * 26 + 'A');
         Log.w("############", s);
         return s;
+    }
+
+    public boolean showWarning() {
+        return sharedPreferences.getBoolean("show_warning", true);
+    }
+
+    public void hideWarning() {
+        editor.putBoolean("show_warning", false);
+        editor.commit();
     }
 }
