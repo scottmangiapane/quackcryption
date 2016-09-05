@@ -1,6 +1,6 @@
 ## QuackCryption
 
-This app uses 128-bit AES and a bitmask to convert a string of text into an encrypted message with a funny twist. It was made as part of a hackathon project with the help of Michael Bilstein, Kevin Dong, and Vikram Pasumarti.
+This app uses 128-bit AES and a bitmask to convert a string of text into an encrypted message with a funny twist. It was made as part of a hackathon project with the help of Michael Bilstein, Kevin Dong, and Vikram Pasumarti. It's "unquackable"!
 
 ## Download
 
