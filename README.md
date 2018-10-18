@@ -8,7 +8,7 @@ To share encrypted text with someone else, be sure that both you and the other p
 
 ## Download
 
-https://play.google.com/store/apps/details?id=co.twoduck.quackcryption
+https://github.com/scottmangiapane/quackcryption/releases
 
 ## Screenshots
 
